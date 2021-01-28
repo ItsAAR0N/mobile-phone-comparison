@@ -7,3 +7,4 @@ dataFrame = p.read_csv('mobilephone_table.csv') # Reads CSV file, ensure csv fil
 print(dataFrame.head()) # It will print the top 5 lines of the dataFrame, aka CSV file.
 #.tail() will print from top to bottom. 
 
+print("Hello!")
