@@ -1,10 +1,17 @@
-# Ensure Pandas is installed firstly
+# Ensure Pandas is installed firstly, Ensure you are on Python 3.9.1
 import pandas as p
+
+# Assign variables
+n = 10 
 
 # Assign the table of CSV content to a variable, dataFrame
 dataFrame = p.read_csv('mobilephone_table.csv') # Reads CSV file, ensure csv file is in the same folder 
 
-n = 10 
-print(dataFrame.head(n)) # It will print the top (first) 10 rows of the dataFrame, aka CSV file.
-#.tail() will print from bottom to top
+# .head() will print from top to bottom
+# .tail() will print from bottom to top
 
+# This will find the first 10 phones that cost 4,999 which is then been assigned a variable
+cost5000 = dataFrame[(dataFrame['Cost'] == '4,999')]
+
+print(cost5000.head(n))
+# Will print the first 10 phones
