@@ -15,3 +15,4 @@ cost5000 = dataFrame[(dataFrame['Cost'] == '4,999')]
 
 print(cost5000.head(n))
 # Will print the first 10 phones
+cost5000.to_csv('cost-5000.csv') # Creates a new CSV with the parameters
