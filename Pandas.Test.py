@@ -18,3 +18,4 @@ print(cost5000.head(n))
 cost5000.to_csv('cost-5000.csv') # Creates a new CSV with the parameters
 
 # You can also do len() to get no.
+print("Test")
