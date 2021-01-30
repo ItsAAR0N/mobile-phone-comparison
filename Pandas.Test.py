@@ -2,7 +2,7 @@
 import pandas as p
 
 # Assign variables
-n = 10 
+n = 50
 
 # Assign the table of CSV content to a variable, dataFrame
 dataFrame = p.read_csv('mobilephone_table.csv') # Reads CSV file, ensure csv file is in the same folder 
@@ -11,11 +11,12 @@ dataFrame = p.read_csv('mobilephone_table.csv') # Reads CSV file, ensure csv fil
 # .tail() will print from bottom to top
 
 # This will find the first 10 phones that cost 4,999 which is then been assigned a variable
-cost5000 = dataFrame[(dataFrame['Cost'] == '4,999')]
+cost5000 = dataFrame[(dataFrame['Cost'] == '7,999')]
 
-print(cost5000.head(n))
+print(cost5000.head(50))
 # Will print the first 10 phones
 cost5000.to_csv('cost-5000.csv') # Creates a new CSV with the parameters
 
 # You can also do len() to get no.
 print("Test")
+
