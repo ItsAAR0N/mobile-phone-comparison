@@ -1,21 +1,26 @@
+# DISPLAYS SIMPLE COMMANDS
 # Ensure Pandas is installed firstly, Ensure you are on Python 3.9.1
 import pandas as p
 
-# Assign variables
-n = 10
-# Assign the table of CSV content to a variable, dataFrame
-dataFrame = p.read_csv('mobilephone_table.csv') # Reads CSV file, ensure csv file is in the same folder 
+# Add print() to display data to any
 
-# .head() will print from top to bottom
-# .tail() will print from bottom to top
+mobile_dataFrame = p.read_csv('mobilephone_table.csv') # Reads CSV file, ensure csv file is in the same folder
 
-# This will find the first 10 phones that cost 4,999 which is then been assigned a variable
-cost5000 = dataFrame[(dataFrame["Cost"] == '7,999')]
+mobile_dataFrame.head() # Prints the 1st 5 datasets by default unless specific
+# Head means (top) to (bottom)
 
-print(cost5000.head(n))
-# Will print the first 10 phones
-#cost5000.to_csv('cost-5000.csv') # Creates a new CSV with the parameters
+mobile_dataFrame.describe()
+# Shows the count, mean, std, min, quartile values and max
 
-# You can also do len() to get no.
-print("Test")
+mobile_dataFrame.drop(['ImageUrl','Camera_details'],axis=1).head()
+# Removes/trims any column as one desires
+
+mobile_dataFrame.isnull().sum()
+# Counts for any invalid/empty cells 
+
+mobile_dataFrame.value_counts(mobile_dataFrame['Cost']).plot.bar()
+# Plot any bar graph under any column and display
+
+mobile_dataFrame['Cost'].mean()
+# Finds the mean cost for example
 
