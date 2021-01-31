@@ -19,8 +19,8 @@ class MobileComparison:
         print(SetRange) 
 
     def setSpecific(self):
-        setName = "Cost" # Can add different methods to get desired column
-        searchTerm = '7,999' # Can add a search function/parameter to find desired results
+        setName = "Cost" # Can add different methods to get desired column (Example Column)
+        searchTerm = '7,999' # Can add a search function/parameter to find desired results (Example)
         SpecificSet = self.dataFrame[(self.dataFrame[setName] == searchTerm)] # Will find phones that cost 7,999 then display it. Cost being an example
         # This method of filtering can be applied to other columns such as name, size etc.
         totalNo = len(SpecificSet)
