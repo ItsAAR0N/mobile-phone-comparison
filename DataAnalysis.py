@@ -1,4 +1,5 @@
 import pandas as p
+
 # DEMONSTRATION OF INTEGRATION OF CLASSES
 # WILL BE USEFUL FOR OUR PROGRAM WHICH REQUIRES DIFFERENT ASSESSOR METHODS TO FUNCTIONS
 
@@ -11,7 +12,7 @@ dataFrame = p.read_csv('mobilephone_table.csv') # Reads CSV file, ensure csv fil
 class MobileComparison:
     def __init__(self, ValueOne, ValueTwo): # Initialise variables
         self.ValueOne,self.ValueTwo = ValueOne,ValueTwo
-        self.dataFrame = p.read_csv('mobilephone_table.csv') # Import set o fdata
+        self.dataFrame = p.read_csv('mobilephone_table.csv') # Import set of data
 
     def range(self):
         # Display set of data from range N to N
