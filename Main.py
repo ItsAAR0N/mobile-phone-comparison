@@ -3,7 +3,7 @@ import pandas as p
 import tkinter 
 
 # Assign the table of CSV content to a variable, dataFrame
-dataFrame = p.read_csv('mobilephonetable.csv') # Reads CSV file, ensure csv file is in the same folder 
+dataFrame = p.read_csv('mobilephone_table.csv') # Reads CSV file, ensure csv file is in the same folder 
 print("There are in total: {0} phones.".format(len(dataFrame))) # Prints total number of rows and columns
 
 print("Hello, welcome to the Mobile Phone Comparison.")
