@@ -4,7 +4,7 @@ import pandas as p
 
 # Add print() to display data to any
 
-mobile_dataFrame = p.read_csv('mobilephone_table.csv') # Reads CSV file, ensure csv file is in the same folder
+mobile_dataFrame = p.read_csv('mobilephonetable.csv') # Reads CSV file, ensure csv file is in the same folder
 
 mobile_dataFrame.head() # Prints the 1st 5 datasets by default unless specific
 # Head means (top) to (bottom)
