@@ -3,6 +3,8 @@ EE106 Report on mobile phone comparison.
 
 Google Doc: https://docs.google.com/document/d/1dxGk3OYqpjm_EX4ilMH2m5c89_P3ok2_lj7GciochZg/edit?usp=sharing
 
+Report Structure: https://docs.google.com/document/d/1MbSs6QAELuaeOaNOIvhzkoHHcMBsLnHeT4VxABHfwvE/edit?usp=sharing
+
 Use the Google document for more reference. 
 This repository is used to share code. 
 
