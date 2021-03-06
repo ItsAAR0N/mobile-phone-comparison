@@ -27,8 +27,15 @@ class Filtering:
     def sortBy(self): # Add alpha./numerical order sorting functionality
         print("Hello!") # WIP
 
-    def narrowSearch(self): # Add range narrow searcher functionality
-        print("Hello!") # WIP
+    def narrowSearch(self):
+        # Define variables
+        ValueOne,ValueTwo = 0,0 # Range(X,Y) 
+        while ValueOne == 0 and ValueTwo == 0: # Input Validation
+            ValueOne,ValueTwo = int(input("Please enter Min Value: ")),  int(input("Please enter Max Value: "))
+            while ValueTwo < ValueOne: # Top (Max) number cannot be less than the starting (min)
+                print("\nError, Max value must be less than Min")
+                ValueOne,ValueTwo = int(input("Please enter Min Value: ")),  int(input("Please enter Max Value: "))           
+            break
 
     def specificSearch(self): # An alternative rather than going through all of the above
         print("Hello") # WIP - user can explicity search for specific phones in one go.
