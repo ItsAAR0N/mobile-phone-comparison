@@ -38,9 +38,9 @@ class Filtering:
             ColumnSelected,AscendingInput = input("\nPlease enter a column to sort in order: "),  input("\n[Y] for ascending order, [N] for descending order: ").lower()
             while AscendingInput != "y" and AscendingInput != "n":
                 AscendingInput = input("\n(Please re-enter) [Y] for ascending order, [N] for descending order: ").lower()
-        if AscendingInput == "y":
+        if AscendingInput == "y": # Will be ascending
             AscendingOrder = 0
-        elif AscendingInput == "n":
+        elif AscendingInput == "n": # Will be descending
             AscendingOrder = 1
         self.dataFrame.sort_values(by=[ColumnSelected],ascending=AscendingOrder,inplace=True) # Now sort according to user chosen options
         print(self.dataFrame)
@@ -84,13 +84,13 @@ class Filtering:
         # Input validation (USING WHILE)
         while user_input == "" or user_input < 1 or user_input > 3:
             user_input = int(input("\nEnter here: "))
-        if user_input == 1:
+        if user_input == 1: # Drop columns
             self.dropColumn()
-        elif user_input == 2:
+        elif user_input == 2: # Sort in alph./number order
             self.sortBy()
-        elif user_input == 3:
+        elif user_input == 3: # Narrow searches
             self.narrowSearch()
-        elif user_input == 4: 
+        elif user_input == 4: # Specific search
             self.specificSearch()
                                 
         # WIP
