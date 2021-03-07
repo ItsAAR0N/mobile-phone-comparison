@@ -1,6 +1,7 @@
 # Import of libraries 
 import pandas as p
 import tkinter 
+import time as t
 
 # Assign the table of CSV content to a variable, dataFrame
 dataFrame = p.read_csv(r'C:\Users\aaron\OneDrive - University of Strathclyde\EE106 Engineering Design for Software\Semester 2 project\Repository\mobilephone_table.csv') # Reads CSV file, ensure csv file is in the same folder 
@@ -77,22 +78,39 @@ class Filtering:
 
     # COMPLETED
     def initial(self):
-        print("\nPlease start off by selecting the desired function by its number: ")
+        print("\nPlease select the desired function by its number: ")
         print("\n[1] Drop columns \n[2] Sort in alph./number order \n[3] Narrow Search\n[4] Specific Search") # Display list of options to choose from
         # WIP ABOVE (WILL ADD MORE OPTIONS)
         user_input = "" # Define local variables 
         # Input validation (USING WHILE)
-        while user_input == "" or user_input < 1 or user_input > 3:
+        while user_input == "" or user_input < 1 or user_input > 4:
             user_input = int(input("\nEnter here: "))
         if user_input == 1: # Drop columns
             self.dropColumn()
+            self.repeat() # Allows for repeatadability functionality 
         elif user_input == 2: # Sort in alph./number order
             self.sortBy()
+            self.repeat()
         elif user_input == 3: # Narrow searches
             self.narrowSearch()
+            self.repeat()
         elif user_input == 4: # Specific search
             self.specificSearch()
-                                
+            self.repeat()
+
+    # WIP                            
+    def repeat(self): # Program repeatability 
+        userRequest = ""
+        while userRequest == "" and userRequest != "y" and userRequest != "n": # Input validation
+            userRequest = input("Would you like to further narrow/filter results? [Y/N]: ").lower()
+        if userRequest == "y":
+            self.initial()
+        elif userRequest == "n":
+            print(self.dataFrame)
+            print("\nHave a nice day! :)")
+            t.sleep(10)
+            raise SystemExit
+
         # WIP
 
 # CLASS COMPARISON (COMPARE TWO DATAFRAMES)
