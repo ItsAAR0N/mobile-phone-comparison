@@ -5,6 +5,7 @@ import time as t
 
 # Assign the table of CSV content to a variable, dataFrame
 dataFrame = p.read_csv(r'C:\Users\aaron\OneDrive - University of Strathclyde\EE106 Engineering Design for Software\Semester 2 project\Repository\mobilephone_table.csv') # Reads CSV file, ensure csv file is in the same folder 
+dataFrame.drop_duplicates(keep='first',inplace=True) # Remove duplicate rows, keeping first set to prevent data loss, inplace means the dataFrame is updated along
 
 print("\nHello, welcome to the Mobile Phone Comparison.")
 print("There are in total: {0} phones.".format(len(dataFrame))) # Prints total number of rows and columns
