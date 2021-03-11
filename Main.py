@@ -7,6 +7,7 @@ import time as t
 dataFrame = p.read_csv(r'C:\Users\aaron\OneDrive - University of Strathclyde\EE106 Engineering Design for Software\Semester 2 project\Repository\mobilephone_table.csv') # Reads CSV file, ensure csv file is in the same folder 
 dataFrame.drop_duplicates(keep='first',inplace=True) # Remove duplicate rows, keeping first set to prevent data loss, inplace means the dataFrame is updated along
 dataFrame.dropna(inplace=True) # Drops any NaN values or (empty) cells, inplace to keep changes permanent 
+dataFrame_copy = dataFrame.copy() # Copies the DataFrame as backup for later reference
 
 print("\nHello, welcome to the Mobile Phone Comparison.")
 print("There are in total: {0} phones.".format(len(dataFrame))) # Prints total number of rows and columns
@@ -44,9 +45,9 @@ class Filtering:
             while AscendingInput != "y" and AscendingInput != "n":
                 AscendingInput = input("\n(Please re-enter) [Y] for ascending order, [N] for descending order: ").lower()
         if AscendingInput == "y": # Will be ascending
-            AscendingOrder = False
-        elif AscendingInput == "n": # Will be descending
             AscendingOrder = True
+        elif AscendingInput == "n": # Will be descending
+            AscendingOrder = False
         self.dataFrame.sort_values(by=[ColumnSelected],ascending=AscendingOrder,inplace=True) # Now sort according to user chosen options
         print(self.dataFrame)
 
@@ -84,7 +85,6 @@ class Filtering:
         while columnTerm not in columnHeadings: # Input validation for when user input =/= to any column headings
             columnTerm = input("Please enter desired column here: ")            
         searchTerm = input("Please now enter the item you wish to explicitly search within {0}: ".format(columnTerm))
-        self.dataFrame.drop(columns=['ImageUrl'],inplace=True)
         self.dataFrame = self.dataFrame[self.dataFrame[columnTerm].str.contains(searchTerm)] # If the row contains a phone that the user has specified, it shown
         print(self.dataFrame)
 
@@ -124,13 +124,22 @@ class Filtering:
         # Input validation (makes sure user enters y/n only)
         while userRequest != "y" and userRequest != "n":
             userRequest = input("Would you like to further narrow/filter results? [Y/N]: ").lower()
+        # Program will continue re-iterating the functions until the user is finished and enters n 
         if userRequest == "y":
             self.initial()
         elif userRequest == "n":
-            print(self.dataFrame)
-            print("\nHave a nice day! :)") 
-            t.sleep(10)
-            raise SystemExit # Shuts down program with 10 second wait before      
+            print(self.dataFrame) # Print dataFrame state at the moment in time
+            # Define local var
+            downloadResults = "" 
+            # Input validation
+            while downloadResults != "y" and downloadResults != "n":
+                downloadResults = input("Would you like a copy of the dataframe in Excel file format? [Y/N]: ").lower()
+                if downloadResults == "y": # Prints a copy of the dataFrame to Excel format, path is explicitly defined for now - desktop
+                    self.dataFrame.to_csv(r'C:\Users\aaron\Desktop\FilteredMobileList.csv', index=False) # No need for numbering down the left side hence index = False
+                else: # If user does not want to print it will exit.
+                    print("\nHave a nice day! :)") 
+                    t.sleep(10)
+                    raise SystemExit # Shuts down program with 10 second wait before      
         # WIP
 
     # TEMPORARY (EXIT FOR PROGRAM TESTING PURPOSES)
