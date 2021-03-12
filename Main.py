@@ -3,11 +3,14 @@ import pandas as p
 import tkinter 
 import time as t
 
+# INITIAL DATAFRAME PARSING
 # Assign the table of CSV content to a variable, dataFrame
+
 dataFrame = p.read_csv(r'C:\Users\aaron\OneDrive - University of Strathclyde\EE106 Engineering Design for Software\Semester 2 project\Repository\mobilephone_table.csv') # Reads CSV file, ensure csv file is in the same folder 
 dataFrame.drop_duplicates(keep='first',inplace=True) # Remove duplicate rows, keeping first set to prevent data loss, inplace means the dataFrame is updated along
 dataFrame.dropna(inplace=True) # Drops any NaN values or (empty) cells, inplace to keep changes permanent 
-dataFrame_copy = dataFrame.copy() # Copies the DataFrame as backup for later reference
+dataFrame.drop(dataFrame.index[24], inplace=True) # Removes the one extra heading in posiiton 24
+dataFrame['Cost'] = dataFrame.Cost.str.split(',').str.join('') # Splits the cost to integer rather than string with comma separated values
 
 print("\nHello, welcome to the Mobile Phone Comparison.")
 print("There are in total: {0} phones.".format(len(dataFrame))) # Prints total number of rows and columns
@@ -42,13 +45,15 @@ class Filtering:
         print("\nThe column headings are as followed:\n{0}".format(', '.join(list(dataFrame)))) # Displays the column headings which the user can choose to remove 
         while ColumnSelected == "" and AscendingInput == True: # Input Validation
             ColumnSelected,AscendingInput = input("\nPlease enter a column to sort in order: "),  input("\n[Y] for ascending order, [N] for descending order: ").lower()
+            while ColumnSelected not in list(dataFrame):
+                ColumnSelected = input("\n(Please re-enter) A column to sort in order: ")
             while AscendingInput != "y" and AscendingInput != "n":
                 AscendingInput = input("\n(Please re-enter) [Y] for ascending order, [N] for descending order: ").lower()
         if AscendingInput == "y": # Will be ascending
             AscendingOrder = True
         elif AscendingInput == "n": # Will be descending
             AscendingOrder = False
-        self.dataFrame.sort_values(by=[ColumnSelected],ascending=AscendingOrder,inplace=True) # Now sort according to user chosen options
+        self.dataFrame.sort_values(ColumnSelected,ascending=AscendingOrder,inplace=True) # Now sort according to user chosen options
         print(self.dataFrame)
 
     # COMPLETED
@@ -148,6 +153,9 @@ class Filtering:
 
 # CLASS COMPARISON (COMPARE TWO DATAFRAMES)
 class Comparison:
+    def __init__(self):
+        self.dataFrame_copy = dataFrame.copy() # Copies the DataFrame as backup for later reference
+
     def mobileComparison(self): # Compare two dataframes together
         print("Hello") # WIP
 
