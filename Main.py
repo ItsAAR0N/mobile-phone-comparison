@@ -6,6 +6,13 @@ import time as t
 # MAKE SURE YOU RUN PYTHON AS ADMIN!
 # Assign the table of CSV content to a variable, dataFrame then pass to class
 dataFrame = p.read_csv(r'C:\Users\aaron\OneDrive - University of Strathclyde\EE106 Engineering Design for Software\Semester 2 project\Repository\mobilephone_table.csv') # Reads CSV file, ensure csv file is in the same folder 
+# INITIAL DATAFRAME PARSING
+dataFrame.drop_duplicates(keep='first',inplace=True) # Remove duplicate rows, keeping first set to prevent data loss, inplace means the dataFrame is updated along
+dataFrame.dropna(inplace=True) # Drops any NaN values or (empty) cells, inplace to keep changes permanent 
+dataFrame.drop(dataFrame.index[24], inplace=True) # Removes the one extra heading in position 24
+dataFrame['Cost'] = dataFrame.Cost.str.split(',').str.join('').astype(int) # Splits the cost to integer rather than string with commas
+# CREATE COPY FOR SECOND MOBILE PHONE COMPARISON
+copydataFrame = dataFrame.copy()
 
 print("\nHello, welcome to the Mobile Phone Comparison!")
 root = Tk() # All TK modules require a root at the beginning as per standardized measures
@@ -13,15 +20,14 @@ root.withdraw() # Need not full GUI, so root window is withdrawn
 
 # CLASS FILTERING (MAIN)
 class Filtering: 
-    def __init__(self): # Initialise attributes of the class
-        self.dataFrame = dataFrame # Import set of data
-        # INITIAL DATAFRAME PARSING
-        self.dataFrame.drop_duplicates(keep='first',inplace=True) # Remove duplicate rows, keeping first set to prevent data loss, inplace means the dataFrame is updated along
-        self.dataFrame.dropna(inplace=True) # Drops any NaN values or (empty) cells, inplace to keep changes permanent 
-        self.dataFrame.drop(dataFrame.index[24], inplace=True) # Removes the one extra heading in position 24
-        self.dataFrame['Cost'] = dataFrame.Cost.str.split(',').str.join('').astype(int) # Splits the cost to integer rather than string with commas
+    def __init__(self, RunSecondTime): # Initialise attributes of the class
+        self.RunSecondTime = RunSecondTime
+        if self.RunSecondTime == False: # Initially false since is it not known whether user wants to do it twice
+            self.dataFrame = dataFrame # Import set of data
+            # INITIAL DATAFRAME PARSING            
+        elif self.RunSecondTime == True: # Run the functions using a copy of the dataframe. 
+            self.dataFrame = copydataFrame # Import set of copy data    
 
-    # COMPLETED        
     def dropColumn(self): 
         print("\nThe column headings are as followed:\n{0}".format(', '.join(list(self.dataFrame)))) # Displays the column headings which the user can choose to remove 
         # Which is formatted to suit the print expression followed by seperation of ', ' then joins each column name together.
@@ -37,8 +43,7 @@ class Filtering:
                 dropSelection = input("Please enter column {0} you want to remove (Case sensitive): ".format(i)) # Ensures readability e.g 1... 2.. etc.
             self.dataFrame.drop(columns=[dropSelection],inplace=True) # Start to drop coloumn(s), the use of inplace allows for modification of the dataframe without having to re-assign it             
         print(self.dataFrame) # Show the most up-to-date table after alteration(s) 
-
-    # COMPLETED     
+  
     def sortBy(self): # Add alpha./numerical order sorting functionality
         print("\nThe column headings are as followed:\n{0}".format(', '.join(list(self.dataFrame)))) # Displays the column headings which the user can choose to remove 
         ColumnSelected,AscendingInput = "",True
@@ -55,7 +60,6 @@ class Filtering:
         self.dataFrame.sort_values(by=[ColumnSelected],ascending=AscendingOrder,inplace=True) # Now sort according to user chosen options
         print(self.dataFrame)
 
-    # COMPLETED
     def narrowSearch(self):
         UserChoice = ""
         while UserChoice != "a" and UserChoice != "b": # Input validation
@@ -98,7 +102,6 @@ class Filtering:
         self.dataFrame = self.dataFrame[self.dataFrame[columnTerm].str.contains(searchTerm,case=False)] # If the row contains a phone that the user has specified, it shown
         print(self.dataFrame)
 
-    # COMPLETED
     def initial(self):
         print("\nPlease select the desired function by its number: ")
         print("\n[1] Drop columns \n[2] Sort in alph./number order \n[3] Narrow Search\n[4] Specific Search") # Display list of options to choose from
@@ -106,7 +109,7 @@ class Filtering:
         user_input = 0
         while True:
             try:
-                while user_input < 1 or user_input > 5: # Detects if user_input is within range (1,5)
+                while user_input < 1 or user_input > 4: # Detects if user_input is within range (1,5)
                     user_input = int(input("\nEnter here: "))
                 break
             except ValueError: # If user_input is not an integer it will be detected (ValueError)
@@ -127,11 +130,20 @@ class Filtering:
         elif user_input == 4: 
             self.specificSearch()
             self.repeat()    
-        # HIDDEN/TEMPORARY (EXIT FOR PROGRAM TESTING PURPOSES)
-        elif user_input == 5:  
-            self.testingExit() 
+                      
+    def returndataFrame(self):
+        global dataFrameOne,dataFrameTwo # Define as global var for later use
+        if self.RunSecondTime == False: # Initially, it is not apparent if the user need be comparing phones, so initially false
+            dataFrameOne = self.dataFrame # Define that as one initially
+            self.desiredChoice = "" # Set it to "unknown" state since its not clear whether user want to compare
 
-    # WIP                            
+            return dataFrameOne # Return it to main 
+        elif self.RunSecondTime == True: # IF user wants to do a comparison, the main variable will now be using the copy of the dataFrame
+            dataFrameTwo = self.dataFrame
+            self.desiredChoice = "n" # Set to "n" since no need to ask the user again after they compared
+
+            return dataFrameTwo # Return it to main
+
     def repeat(self): # Program repeatability 
         # Input validation (makes sure user enters y/n only)
         userRequest = ""
@@ -142,33 +154,45 @@ class Filtering:
             self.initial()
         elif userRequest == "n":
             print(self.dataFrame) # Print dataFrame state at the moment in time
+            # STORE DATAFRAME AS VARIABLE THEN RETURN
+            self.returndataFrame()
+
             # Input validation
             downloadResults = ""
             while downloadResults != "y" and downloadResults != "n":
-                downloadResults = input("Would you like a copy of the dataframe in Excel file format? [Y/N]: ").lower()
+                downloadResults = input("Would you like a copy of the current dataframe in Excel file format? [Y/N]: ").lower()
                 if downloadResults == "y": # Prints a copy of the dataFrame to Excel format, path is explicitly defined for now - desktop
                     filepath = r'C:\Users\aaron\Desktop\FilteredMobileList.csv' # Temporary, r stands for "raw string"
                     # filedialog.askdirectory() # Shows explorer for user to select file directory                                        
                     self.dataFrame.to_csv(filepath, index=False) # No need for numbering down the left side hence index = False
-                    print("Saved to {0}, have a nice day!".format(filepath))
-                else: # If user does not want to print it will exit.
-                    print("\nHave a nice day! :)") 
-                    t.sleep(10)
-                    raise SystemExit # Shuts down program with 10 second wait before      
-        # WIP
+                    print("Saved to {0} .".format(filepath))
 
-    # TEMPORARY (EXIT FOR PROGRAM TESTING PURPOSES)
-    def testingExit(self):
-        raise SystemExit
+                else: # If user does not want to print it will exit.
+                    self.mobileComparison()
+                   # And ask for comparison   
 
 # CLASS COMPARISON (COMPARE TWO DATAFRAMES)
-class Comparison:
-    def __init__(self):
-        self.dataFrame_copy = dataFrame.copy() # Copies the DataFrame as backup for later reference
 
     def mobileComparison(self): # Compare two dataframes together
-        print("Hello") # WIP
-
+        while self.desiredChoice != "y" and self.desiredChoice != "n":
+            self.desiredChoice = input("\nWould you like to compare two phones side by side? [Y/N]: ").lower()
+        if self.desiredChoice == "y":
+            RunSecondTime = True # Since it will run the functions again, it is set to true
+            z = Filtering(RunSecondTime) # Input para since var will now be using copy 
+            z.initial() # Run through the filtering process again etc...
+        elif self.desiredChoice == "n":
+            print("EXITING PROGRAM...")
+            t.sleep(5)
+            
 # CALL CLASSES
-x = Filtering()
+
+# START MAIN FUNCTIONS
+RunSecondTime = False # Since initially only it is run once, it is set to false
+x = Filtering(RunSecondTime)
 x.initial()
+
+finalComparison = p.concat([dataFrameOne,dataFrameTwo]) # Concatenate two dataframes into one for comparison
+filepath = r'C:\Users\aaron\Desktop\FilteredMobileListCOMPARISON.csv' # Temporary, r stands for "raw string"
+print("The final comparison is now saved to {0}. Have a nice day! :)".format(filepath))
+finalComparison.to_csv(filepath, index=False) # Create file as final comparison dataframe
+
