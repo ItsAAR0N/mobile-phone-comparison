@@ -1,9 +1,7 @@
 # Import of libraries 
 import pandas as p
-from tkinter import filedialog
-from tkinter import Tk
 import time as t
-# MAKE SURE YOU RUN PYTHON AS ADMIN!
+
 # Assign the table of CSV content to a variable, dataFrame then pass to class
 dataFrame = p.read_csv(r'C:\Users\aaron\OneDrive - University of Strathclyde\EE106 Engineering Design for Software\Semester 2 project\Repository\mobilephone_table.csv') # Reads CSV file, ensure csv file is in the same folder 
 # INITIAL DATAFRAME PARSING
@@ -15,8 +13,6 @@ dataFrame['Cost'] = dataFrame.Cost.str.split(',').str.join('').astype(int) # Spl
 copydataFrame = dataFrame.copy()
 
 print("\nHello, welcome to the Mobile Phone Comparison!")
-root = Tk() # All TK modules require a root at the beginning as per standardized measures
-root.withdraw() # Need not full GUI, so root window is withdrawn
 
 # CLASS FILTERING (MAIN)
 class Filtering: 
@@ -162,8 +158,7 @@ class Filtering:
             while downloadResults != "y" and downloadResults != "n":
                 downloadResults = input("Would you like a copy of the current dataframe in Excel file format? [Y/N]: ").lower()
                 if downloadResults == "y": # Prints a copy of the dataFrame to Excel format, path is explicitly defined for now - desktop
-                    filepath = r'C:\Users\aaron\Desktop\FilteredMobileList.csv' # Temporary, r stands for "raw string"
-                    # filedialog.askdirectory() # Shows explorer for user to select file directory                                        
+                    filepath = r'C:\Users\aaron\Desktop\FilteredMobileList.csv' # Temporary, r stands for "raw string"                                      
                     self.dataFrame.to_csv(filepath, index=False) # No need for numbering down the left side hence index = False
                     print("Saved to {0} .".format(filepath))
 
@@ -195,4 +190,3 @@ finalComparison = p.concat([dataFrameOne,dataFrameTwo]) # Concatenate two datafr
 filepath = r'C:\Users\aaron\Desktop\FilteredMobileListCOMPARISON.csv' # Temporary, r stands for "raw string"
 print("The final comparison is now saved to {0}. Have a nice day! :)".format(filepath))
 finalComparison.to_csv(filepath, index=False) # Create file as final comparison dataframe
-
