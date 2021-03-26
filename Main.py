@@ -183,10 +183,11 @@ class Filtering:
 
 # START MAIN FUNCTIONS
 RunSecondTime = False # Since initially only it is run once, it is set to false
-x = Filtering(RunSecondTime)
-x.initial()
+callClass = Filtering(RunSecondTime)
+callClass.initial()
 
-finalComparison = p.concat([dataFrameOne,dataFrameTwo]) # Concatenate two dataframes into one for comparison
-filepath = r'C:\Users\aaron\Desktop\FilteredMobileListCOMPARISON.csv' # Temporary, r stands for "raw string"
-print("The final comparison is now saved to {0}. Have a nice day! :)".format(filepath))
-finalComparison.to_csv(filepath, index=False) # Create file as final comparison dataframe
+if RunSecondTime == True:
+    finalComparison = p.concat([dataFrameOne,dataFrameTwo]) # Concatenate two dataframes into one for comparison
+    filepath = r'C:\Users\aaron\Desktop\FilteredMobileListCOMPARISON.csv' # Temporary, r stands for "raw string"
+    print("The final comparison is now saved to {0}. Have a nice day! :)".format(filepath))
+    finalComparison.to_csv(filepath, index=False) # Create file as final comparison dataframe
