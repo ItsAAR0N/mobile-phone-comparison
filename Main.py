@@ -161,7 +161,7 @@ class Filtering:
                     filepath = r'C:\Users\aaron\Desktop\FilteredMobileList.csv' # Temporary, r stands for "raw string"                                      
                     self.dataFrame.to_csv(filepath, index=False) # No need for numbering down the left side hence index = False
                     print("Saved to {0} .".format(filepath))
-
+                    self.mobileComparison()
                 else: # If user does not want to print it will exit.
                     self.mobileComparison()
                    # And ask for comparison   
