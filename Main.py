@@ -172,6 +172,7 @@ class Filtering:
         while self.desiredChoice != "y" and self.desiredChoice != "n":
             self.desiredChoice = input("\nWould you like to compare two phones side by side? [Y/N]: ").lower()
         if self.desiredChoice == "y":
+            global RunSecondTime 
             RunSecondTime = True # Since it will run the functions again, it is set to true
             z = Filtering(RunSecondTime) # Input para since var will now be using copy 
             z.initial() # Run through the filtering process again etc...
