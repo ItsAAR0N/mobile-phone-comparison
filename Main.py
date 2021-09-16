@@ -9,7 +9,7 @@ dataFrame.drop_duplicates(keep='first',inplace=True) # Remove duplicate rows, ke
 dataFrame.dropna(inplace=True) # Drops any NaN values or (empty) cells, inplace to keep changes permanent 
 dataFrame.drop(dataFrame.index[24], inplace=True) # Removes the one extra heading in position 24
 dataFrame['Cost'] = dataFrame.Cost.str.split(',').str.join('').astype(int) # Splits the cost to integer rather than string with commas
-# CREATE COPY FOR SECOND MOBILE PHONE COMPARISON
+# CREATE COPY FOR SECOND MOBILE PHONE COMPARISON.
 copydataFrame = dataFrame.copy()
 
 print("\nHello, welcome to the Mobile Phone Comparison!")
