@@ -3,7 +3,7 @@ import pandas as p
 import time as t
 
 # Assign the table of CSV content to a variable, dataFrame then pass to class
-dataFrame = p.read_csv(r'C:\Users\aaron\OneDrive - University of Strathclyde\EE106 Engineering Design for Software\Semester 2 project\Repository\mobilephone_table.csv') # Reads CSV file, ensure csv file is in the same folder 
+dataFrame = p.read_csv(r'C:\Users\aaron\OneDrive - University of Strathclyde\YEAR 1\EE106 Engineering Design for Software\Semester 2 project\Repository\mobilephone_table.csv') # Reads CSV file, ensure csv file is in the same folder 
 # INITIAL DATAFRAME PARSING
 dataFrame.drop_duplicates(keep='first',inplace=True) # Remove duplicate rows, keeping first set to prevent data loss, inplace means the dataFrame is updated along
 dataFrame.dropna(inplace=True) # Drops any NaN values or (empty) cells, inplace to keep changes permanent 
